@@ -47,4 +47,11 @@
     (mouseup)="endDrawing()"
     (touchend)="endDrawing()"
   ></canvas>
+
+  <ion-button expand="full" (click)="clearCanvas()">
+    <ion-icon slot="start" name="image"></ion-icon>
+    Clear Canvas!
+  </ion-button>
+
+
 </ion-content>
