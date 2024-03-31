@@ -1,7 +1,7 @@
 {
-  "name": "canvasPainter",
+  "name": "painter",
   "integrations": {
-    "cordova": {}
+    "capacitor": {}
   },
   "type": "angular"
 }

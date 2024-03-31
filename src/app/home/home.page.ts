@@ -1,53 +1,52 @@
-import { Component, AfterViewInit, ViewChild } from "@angular/core";
-import { Platform, ToastController } from "@ionic/angular";
-import {
-  Base64ToGallery,
-  Base64ToGalleryOptions
-} from "@ionic-native/base64-to-gallery/ngx";
+import { Component, AfterViewInit, ViewChild } from '@angular/core';
+import { Platform, ToastController } from '@ionic/angular';
+// import {
+//   Base64ToGallery,
+//   Base64ToGalleryOptions,
+// } from '@ionic-native/base64-to-gallery/ngx';
 
 @Component({
-  selector: "app-home",
-  templateUrl: "home.page.html",
-  styleUrls: ["home.page.scss"]
+  selector: 'app-home',
+  templateUrl: 'home.page.html',
+  styleUrls: ['home.page.scss'],
 })
 export class HomePage implements AfterViewInit {
-  @ViewChild("imageCanvas", { static: false }) canvas: any;
+  @ViewChild('imageCanvas', { static: false }) canvas: any;
   canvasElement: any;
-  saveX: number;
-  saveY: number;
+  saveX: number = 0;
+  saveY: number = 0;
   drawing = false;
 
-  selectedColor = "#9e2956";
+  selectedColor = '#9e2956';
   colors = [
-    "#9e2956",
-    "#c2281d",
-    "#de722f",
-    "#edbf4c",
-    "#5db37e",
-    "#459cde",
-    "#4250ad",
-    "#802fa3"
+    '#9e2956',
+    '#c2281d',
+    '#de722f',
+    '#edbf4c',
+    '#5db37e',
+    '#459cde',
+    '#4250ad',
+    '#802fa3',
   ];
   lineWidth = 7;
 
   constructor(
     private plt: Platform,
-    private base64ToGallery: Base64ToGallery,
+    // private base64ToGallery: Base64ToGallery,
     private toastCtrl: ToastController
   ) {}
 
   ngAfterViewInit() {
     this.canvasElement = this.canvas.nativeElement;
-    this.canvasElement.width = this.plt.width() + "";
+    this.canvasElement.width = this.plt.width() + '';
     this.canvasElement.height = 200;
   }
 
-  selectColor(color) {
+  selectColor(color: any) {
     this.selectedColor = color;
   }
 
-  startDrawing(ev) {
-    console.log(ev);
+  startDrawing(ev: any) {
     this.drawing = true;
     const canvasPosition = this.canvasElement.getBoundingClientRect();
 
@@ -55,8 +54,7 @@ export class HomePage implements AfterViewInit {
     this.saveY = ev.pageY - canvasPosition.y;
   }
 
-  startDrawingMobile(ev) {
-    console.log(ev);
+  startDrawingMobile(ev: any) {
     this.drawing = true;
     const canvasPosition = this.canvasElement.getBoundingClientRect();
 
@@ -68,15 +66,15 @@ export class HomePage implements AfterViewInit {
     this.drawing = false;
   }
 
-  moved(ev) {
+  moved(ev: any) {
     if (!this.drawing) return;
     const canvasPosition = this.canvasElement.getBoundingClientRect();
-    let ctx = this.canvasElement.getContext("2d");
+    let ctx = this.canvasElement.getContext('2d');
 
     let currentX = ev.pageX - canvasPosition.x;
     let currentY = ev.pageY - canvasPosition.y;
 
-    ctx.lineJoin = "round";
+    ctx.lineJoin = 'round';
     ctx.strokeStyle = this.selectedColor;
     ctx.lineWidth = this.lineWidth;
 
@@ -91,15 +89,15 @@ export class HomePage implements AfterViewInit {
     this.saveY = currentY;
   }
 
-  movedMobile(ev) {
+  movedMobile(ev: any) {
     if (!this.drawing) return;
     const canvasPosition = this.canvasElement.getBoundingClientRect();
-    let ctx = this.canvasElement.getContext("2d");
+    let ctx = this.canvasElement.getContext('2d');
 
     let currentX = ev.touches[0].pageX - canvasPosition.x;
     let currentY = ev.touches[0].pageY - canvasPosition.y;
 
-    ctx.lineJoin = "round";
+    ctx.lineJoin = 'round';
     ctx.strokeStyle = this.selectedColor;
     ctx.lineWidth = this.lineWidth;
 
@@ -116,8 +114,8 @@ export class HomePage implements AfterViewInit {
 
   setBackground() {
     var background = new Image();
-    background.src = "./assets/coupon_pic_lg.png";
-    let ctx = this.canvasElement.getContext("2d");
+    background.src = './assets/coupon_pic_lg.png';
+    let ctx = this.canvasElement.getContext('2d');
 
     background.onload = () => {
       ctx.drawImage(
@@ -131,45 +129,31 @@ export class HomePage implements AfterViewInit {
   }
 
   clearCanvas() {
-    let ctx = this.canvasElement.getContext("2d");
+    let ctx = this.canvasElement.getContext('2d');
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
   }
 
   exportCanvasImage() {
     const dataUrl = this.canvasElement.toDataURL();
-    console.log("image: ", dataUrl);
     this.clearCanvas();
-    if (this.plt.is("cordova")) {
-      const options: Base64ToGalleryOptions = {
-        prefix: "canvas_",
-        mediaScanner: true
-      };
-
-      this.base64ToGallery.base64ToGallery(dataUrl, options).then(
-        async res => {
-          const toast = await this.toastCtrl.create({
-            message: "Image saved to camera roll.",
-            duration: 2000
-          });
-          toast.present();
-        },
-        err => console.log("Error saving image to gallery ", err)
-      );
+    if (this.plt.is('cordova')) {
+      // TODO: Rework this section with capacitor
+      console.log("Cordova not yet implemented!")
     } else {
-      var data = dataUrl.split(",")[1];
-      let blob = this.b64toBlob(data, "image/png");
+      var data = dataUrl.split(',')[1];
+      let blob = this.b64toBlob(data, 'image/png');
 
-      var a = window.document.createElement("a");
+      var a = window.document.createElement('a');
       a.href = window.URL.createObjectURL(blob);
-      a.download = "canvasimage.png";
+      a.download = 'canvasimage.png';
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
     }
   }
 
-  b64toBlob(b64Data, contentType) {
-    contentType = contentType || "";
+  b64toBlob(b64Data: any, contentType: any) {
+    contentType = contentType || '';
     var sliceSize = 512;
     var byteCharacters = atob(b64Data);
     var byteArrays = [];
