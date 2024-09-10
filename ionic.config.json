@@ -1,5 +1,7 @@
 {
   "name": "painter-app",
-  "integrations": {},
+  "integrations": {
+    "capacitor": {}
+  },
   "type": "angular"
 }
