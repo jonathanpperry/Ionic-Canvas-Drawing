@@ -1,8 +1,8 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'io.jonnyramen.painterapp',
-  appName: 'painter-app',
+  appId: 'io.jonnyramen.canvasdrawing',
+  appName: 'Canvas Drawing',
   webDir: 'www'
 };
 

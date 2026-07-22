@@ -1,10 +1,10 @@
 apply plugin: 'com.android.application'
 
 android {
-    namespace "io.jonnyramen.painterapp"
+    namespace "io.jonnyramen.canvasdrawing"
     compileSdk rootProject.ext.compileSdkVersion
     defaultConfig {
-        applicationId "io.jonnyramen.painterapp"
+        applicationId "io.jonnyramen.canvasdrawing"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
